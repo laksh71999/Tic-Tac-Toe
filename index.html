@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+		<meta charset="UTF-8" />
+		<meta content="Clederson Cruz" name="author" />
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<link type="text/css" rel="stylesheet" href="web_version/style.css" />
+		<script type="text/javascript" src="web_version/script.js"></script>
+		<title>tic tac toe</title>
+	</head>
+	<body>
+		<header>
+			<h1>2RING TIC TAC TOE</h1>
+		</header>
+			<br />
+			<div style="justify-content: right">
+			<p id="message"></p>
+			<div id="im" class="image"><img src="https://palanibalans.github.io/Gif/chestmicanimate.gif" id="imgClickAndChange"/> </div>
+			<br />
+			</div>
+			<div>
+		<table id="tab-tic-tac-toe" cellspacing="0">
+			<tr><td id="00" onclick="clickedCell(this)"></td>
+				<td id="01" onclick="clickedCell(this)"></td>
+				<td id="02" onclick="clickedCell(this)"></td>
+			</tr>
+			<tr><td id="10" onclick="clickedCell(this)"></td>
+				<td id="11" onclick="clickedCell(this)"></td>
+				<td id="12" onclick="clickedCell(this)"></td>
+			</tr>
+			<tr><td id="20" onclick="clickedCell(this)"></td>
+				<td id="21" onclick="clickedCell(this)"></td>
+				<td id="22" onclick="clickedCell(this)"></td>
+			</tr>
+		</table>
+		<br><br>
+
+
+		<input type="button" value="Start AI" id="bnt-restart" onclick="restartBnt(this)"/>
+			
+        <p>PLAY the game with voice </p>
+
+        <p><img src="source.gif" onclick="runSpeechRecognition()" style="height:50px; width: 50px " > &nbsp; <span id="action"></span></p>
+       <center> <input type="text" id="output" class="hide" hidden / ></center>
+
+		<br />
+
+		<p id=g class="hide1"></p>
+		</div>
+		<script type="text/javascript">
+	/* JS comes here */
+			var res, admin,str;
+
+		    function runSpeechRecognition() {
+		        // get output div reference
+		              console.log("voice start");
+               
+		        var output = document.getElementById("output");
+		        // get action element reference
+		        var action = document.getElementById("action");
+                // new speech recognition object
+                var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+                var recognition = new SpeechRecognition();
+            
+                // This runs when the speech recognition service starts
+                recognition.onstart = function() {
+                    action.innerHTML = "user";
+                };
+                
+                recognition.onspeechend = function() {
+                    action.innerHTML = "user listening is stop";
+                    recognition.stop();
+                }
+              
+                // This runs when the speech recognition service returns result
+                recognition.onresult = function(event) {
+                    var transcript = event.results[0][0].transcript;
+                    //var confidence = event.results[0][0].confidence;
+                    output.innerHTML = transcript;
+                    res = transcript; 
+                    check(res);
+
+                    output.classList.remove("hide");
+                };
+              
+                 // start recognition
+                 recognition.start();
+
+	        }
+function check(res){
+
+	 	 
+  		
+     
+		if(res == ("top left" || "left top"))
+		{
+			//var a = document.getElementByName("one");
+			console.log("top left");
+			var x = document.getElementById("00");
+			clickedCell(x);
+			runSpeechRecognition();
+
+
+		}else if(res == ("top middle" || "middle top")){
+			console.log("top middle");
+			var x = document.getElementById("01");
+			clickedCell(x);
+			runSpeechRecognition();
+
+		}else if(res == ("top right" || "right top")){
+			console.log("top right");
+			var x = document.getElementById("02");
+			clickedCell(x);
+			runSpeechRecognition();
+		}else if(res == ("middle left" || "left middle")){
+			console.log("middle left");
+			var x = document.getElementById("10");
+			clickedCell(x);
+			runSpeechRecognition();
+		}else if(res == ("middle" || "center")){
+			console.log("middle");
+			var x = document.getElementById("11");
+			clickedCell(x);
+			runSpeechRecognition();
+		}else if(res == ("middle right" || "right middle")){
+			console.log("middle right");
+			var x = document.getElementById("12");
+			clickedCell(x);
+			runSpeechRecognition();
+		}else if(res == ("bottom left" || "left bottom")){
+			console.log("bottom left");
+			var x = document.getElementById("20");
+			clickedCell(x);
+			runSpeechRecognition();
+		}else if(res ==("bottom middle" || "middle bottom")){
+			console.log("bottom middle");
+			var x = document.getElementById("21");
+			clickedCell(x);
+			runSpeechRecognition();
+		}else if(res == ("bottom right" || "right bottom")){
+			console.log("bottom right");
+			var x = document.getElementById("22");
+			clickedCell(x);
+			runSpeechRecognition();
+		}else {
+			console.log("invalid move");
+			var g = document.getElementById("g");
+
+			 g.innerHTML = "invalid move";
+			  g.classList.remove("hide1");
+			  runSpeechRecognition();
+		}
+}
+
+
+
+
+function stop(){
+			  
+                let speech = new SpeechSynthesisUtterance();
+			 var synth = window.speechSynthesis;
+			 synth.cancel(speech);
+
+			}
+			
+		</script>
+	</body>
+</html>
